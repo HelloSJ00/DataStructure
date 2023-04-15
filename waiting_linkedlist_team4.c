@@ -1,9 +1,9 @@
-//¸ÀÁı ´ë±âÀÚ °ü¸® ÇÁ·Î±×·¥
+//ë§›ì§‘ ëŒ€ê¸°ì ê´€ë¦¬ í”„ë¡œê·¸ë¨
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
 
-//³ëµå¿Í ¿¬°á¸®½ºÆ® Á¤ÀÇ
+//ë…¸ë“œì™€ ì—°ê²°ë¦¬ìŠ¤íŠ¸ ì •ì˜
 typedef struct _LinkedNode {
     char* _name;
     char* _number;
@@ -18,19 +18,20 @@ typedef struct _LinkedList {
     int len;
 }List;
 
-//ÇÔ¼ö ¼±¾ğ
+//í•¨ìˆ˜ ì„ ì–¸
 void ADD(List* list, char name[20], char number[20]);
-void CheckFront(List* list, char number[20]);
+void CheckFront(List* list);
 void CheckTotal(List* list);
 void Ready(List* list);
 void DeleteHead(List* list);
-void Delete(List* list, char numbe[20]);
+void Delete(List* list);
 void Switch(List* list);
+
 void screen() {
     printf("==================================================================\n");
     printf("==================================================================\n");
-    printf("==========================4Á¶ ÀÚ±¸ÀÚ±¸ÇØº¸ÀÚ±¸=====================\n");
-    printf("=======================¸ÀÁı ´ë±âÀÚ °ü¸® ÇÁ·Î±×·¥===================\n");
+    printf("==========================4ì¡° ìêµ¬ìêµ¬í•´ë³´ìêµ¬=====================\n");
+    printf("=======================ë§›ì§‘ ëŒ€ê¸°ì ê´€ë¦¬ í”„ë¡œê·¸ë¨===================\n");
     printf("ADD()        : '+'\n");
     printf("CheckFront() : 'F'\n");
     printf("CheckTotal() : 'T'\n");
@@ -44,7 +45,7 @@ void screen() {
 }
 
 int main(void) {
-    List* myList = (List*)malloc(sizeof(Node*));
+    List* myList = (List*)malloc(sizeof(Node));
     myList->head = NULL;
     myList->curr = NULL;
     myList->tail = NULL;
@@ -58,66 +59,62 @@ int main(void) {
     char number[20];
     int i = 0;
     while (bIterFlag) {
-        printf("¸í·É¾î¸¦ ÀÔ·ÂÇÏ¼¼¿ä! : ");
+
+        printf("ëª…ë ¹ì–´ë¥¼ ì…ë ¥í•˜ì„¸ìš”! : ");
         scanf_s("%c", &order);
 
         switch (order) {
         case '+':
-            printf("ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä :");
+            printf("ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš” :");
             scanf_s("%s", &name,20);
-            printf("¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä :");
+            printf("ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš” :");
             scanf_s("%s", &number,20);
             ADD(myList, name, number);
             break;
         case 'F':
             if (myList == NULL) {
-                // ¿¹¿Ü Ã³¸®: list°¡ NULLÀÎ °æ¿ì
-                printf("´ë±âÁÙÀÌ ºñ¾ú½À´Ï´Ù! \n");
+                // ì˜ˆì™¸ ì²˜ë¦¬: listê°€ NULLì¸ ê²½ìš°
+                printf("ëŒ€ê¸°ì¤„ì´ ë¹„ì—ˆìŠµë‹ˆë‹¤! \n");
                 break;
             }
-            printf("ÀÚ½ÅÀÇ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä : ");
-            fgets(number, 20, stdin);
-            printf("\n");
-            CheckFront(myList, number);
+            CheckFront(myList);
             break;
         case 'T':
             CheckTotal(myList);
             break;
         case 'R':
             if (myList == NULL) {
-                // ¿¹¿Ü Ã³¸®: list°¡ NULLÀÎ °æ¿ì
-                printf("´ë±âÁÙÀÌ ºñ¾ú½À´Ï´Ù! \n");
+                // ì˜ˆì™¸ ì²˜ë¦¬: listê°€ NULLì¸ ê²½ìš°
+                printf("ëŒ€ê¸°ì¤„ì´ ë¹„ì—ˆìŠµë‹ˆë‹¤! \n");
                 break;
             }
             Ready(myList);
             break;
         case '-':
             if (myList == NULL) {
-                // ¿¹¿Ü Ã³¸®: list°¡ NULLÀÎ °æ¿ì
-                printf("´ë±âÁÙÀÌ ºñ¾ú½À´Ï´Ù! \n");
+                // ì˜ˆì™¸ ì²˜ë¦¬: listê°€ NULLì¸ ê²½ìš°
+                printf("ëŒ€ê¸°ì¤„ì´ ë¹„ì—ˆìŠµë‹ˆë‹¤! \n");
                 break;
             }
             DeleteHead(myList);
             break;
         case 'D':
             if (myList == NULL) {
-                // ¿¹¿Ü Ã³¸®: list°¡ NULLÀÎ °æ¿ì
-                printf("´ë±âÁÙÀÌ ºñ¾ú½À´Ï´Ù! \n");
+                // ì˜ˆì™¸ ì²˜ë¦¬: listê°€ NULLì¸ ê²½ìš°
+                printf("ëŒ€ê¸°ì¤„ì´ ë¹„ì—ˆìŠµë‹ˆë‹¤! \n");
                 break;
             }
-            printf("ÀÚ½ÅÀÇ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä : ");
-            fgets(number, 20, stdin);
-            Delete(myList, number);
+            Delete(myList);
             break;
         case 'S':
             if (myList == NULL) {
-                // ¿¹¿Ü Ã³¸®: list°¡ NULLÀÎ °æ¿ì
-                printf("´ë±âÁÙÀÌ ºñ¾ú½À´Ï´Ù! \n");
+                // ì˜ˆì™¸ ì²˜ë¦¬: listê°€ NULLì¸ ê²½ìš°
+                printf("ëŒ€ê¸°ì¤„ì´ ë¹„ì—ˆìŠµë‹ˆë‹¤! \n");
                 break;
             }
             else if (myList->len == 1) {
-                // ¼Õ´ÔÀÌ ÇÑÆÀÀÖÀ» °æ¿ì
-                printf("¼ø¼­¸¦ ¹Ù²Ü ¼Õ´ÔÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù ! \n");
+                // ì†ë‹˜ì´ í•œíŒ€ìˆì„ ê²½ìš°
+                printf("ìˆœì„œë¥¼ ë°”ê¿€ ì†ë‹˜ì´ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤ ! \n");
                 break;
             }
             Switch(myList);
@@ -126,55 +123,59 @@ int main(void) {
     }
 }
 
-//ÇÔ¼ö Á¤ÀÇ
-void ADD(List* list, char* name, char number[20]) {
+//í•¨ìˆ˜ ì •ì˜
+void ADD(List* list, char name[20], char number[20]) {
     Node* newNode = malloc(sizeof(Node));
     newNode->_name = _strdup(name);
-    strcpy_s(newNode->_number, sizeof(newNode->_number), number);
+    newNode->_number = _strdup(number);
 
-¤§    if (list->curr == NULL) {
-        // ¸®½ºÆ®°¡ ºñ¾îÀÖ´Â °æ¿ì
-        newNode->pre = NULL;
+    if (list->head == NULL) {
+        // ë¦¬ìŠ¤íŠ¸ê°€ ë¹„ì–´ìˆëŠ” ê²½ìš°s
         list->head = newNode;
         list->tail = newNode;
         list->curr = newNode;
+        list->len++;
+        return;
     }
-    else {
-        // ¸®½ºÆ®¿¡ ÀÌ¹Ì ³ëµå°¡ ÀÖ´Â °æ¿ì
-        newNode->pre = list->curr;
-        list->curr->next = newNode;
-        list->curr = newNode;
-        list->tail = newNode;
-    }
-
+    // ë¦¬ìŠ¤íŠ¸ì— ì´ë¯¸ ë…¸ë“œê°€ ìˆëŠ” ê²½ìš°
+    newNode->pre = list->curr;
+    list->curr->next = newNode;
+    list->curr = newNode;
+    list->tail = newNode;
     list->len++;
 }
-void CheckFront(List* list, char number[20]) {
+void CheckFront(List* list) {
+    char number[20];
     int cnt = 0;
-    for (int i = 0; i < list->len;i++) {
-        if (list->head->_number == _strdup(number[20])) {
-            printf("ÇöÀç °í°´´Ô ¾Õ¿¡ %d ÆÀÀÌ ´ë±âÁßÀÔ´Ï´Ù! \n",cnt);
+    printf("ìì‹ ì˜ ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš” : ");
+    fgets(number,20,stdin);
+
+    for (int i = 0;i < list->len;i++) {
+        if (list->curr->_number == _strdup(number)) {
+            printf("ë‹¹ì‹ ì˜ ì•ì—ëŠ” %d íŒ€ì´ ëŒ€ê¸°ì¤‘ì…ë‹ˆë‹¤! \n", cnt);
+            return;
         }
+        list->curr = list->curr->next;
         cnt++;
     }
 }
 
 void CheckTotal(List* list) {
-    return printf("´ë±âÁÙ¿¡´Â ÃÑ %d ÆÀÀÌ ´ë±âÁßÀÔ´Ï´Ù !\n\n", list->len);
+    return printf("ëŒ€ê¸°ì¤„ì—ëŠ” ì´ %d íŒ€ì´ ëŒ€ê¸°ì¤‘ì…ë‹ˆë‹¤ !\n\n", list->len);
 }
 
 void Ready(List* list) {
     list->curr = list->head;
-    printf("°ğ ÀÔÀåÇÒ ÆÀµéÀÔ´Ï´Ù ! \n");
+    printf("ê³§ ì…ì¥í•  íŒ€ë“¤ì…ë‹ˆë‹¤ ! \n");
 
     if (list->len < 3) {
         for (int j = 0;j < list->len;j++) {
-            printf("%d. %s , %s", j+1, list->curr->_name, list->curr->_number);
+            printf("%d , %s , %s", j+1, list->curr->_name, list->curr->_number);
             list->curr = list->curr->next;
         }
     }
     for (int i = 0;i < 3;i++) {
-        printf("%d. %s , %s", i+1, list->curr->_name, list->curr->_number);
+        printf("%d , %s , %s", i+1, list->curr->_name, list->curr->_number);
         list->curr = list->curr->next;
     }
 }
@@ -185,10 +186,14 @@ void DeleteHead(List* list) {
     list->len--;
 }
 
-void Delete(List* list, char number[20]) {
+void Delete(List* list) {
+    char number[20];
+    int cnt = 0;
+    printf("ìì‹ ì˜ ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš” : ");
+    fgets(number, 20, stdin);
     list->curr = list->head;
     for (int i = 0;i < list->len;i++) {
-        if (list->curr->_number == number[12]) {
+        if (list->curr->_number == _strdup(number)){
             list->curr->pre->next = list->curr->next;
         }
     }
@@ -197,8 +202,8 @@ void Delete(List* list, char number[20]) {
 void Switch(List* list) {
     list->curr = list->head;
     list->head = list->head->next;
-    list->head->pre = NULL; // Çìµå »èÁ¦
+    list->head->pre = NULL; // í—¤ë“œ ì‚­ì œ
 
     list->curr->next = list->head->next;
-    list->head->next = list->curr;// ¿ø·¡ÀÇ Çìµå¸¦ µÎ¹øÂ°·Î »ğÀÔ
+    list->head->next = list->curr;// ì›ë˜ì˜ í—¤ë“œë¥¼ ë‘ë²ˆì§¸ë¡œ ì‚½ì…
 }
