@@ -61,7 +61,7 @@ int main(void) {
     while (bIterFlag) {
 
         printf("명령어를 입력하세요! : ");
-        scanf_s("%c", &order);
+        scanf_s("%c", &order); // 두번 발생함
 
         switch (order) {
         case '+':
@@ -158,7 +158,7 @@ void CheckFront(List* list) {
         list->curr = list->curr->next;
         cnt++;
     }
-}
+}//오류
 
 void CheckTotal(List* list) {
     return printf("대기줄에는 총 %d 팀이 대기중입니다 !\n\n", list->len);
@@ -170,14 +170,17 @@ void Ready(List* list) {
 
     if (list->len < 3) {
         for (int j = 0;j < list->len;j++) {
-            printf("%d , %s , %s", j+1, list->curr->_name, list->curr->_number);
+            printf("%d: %s , %s\t", j+1, list->curr->_name, list->curr->_number);
             list->curr = list->curr->next;
         }
+        printf("\n");
+        return;
     }
     for (int i = 0;i < 3;i++) {
-        printf("%d , %s , %s", i+1, list->curr->_name, list->curr->_number);
+        printf("%d: %s , %s \t", i+1, list->curr->_name, list->curr->_number);
         list->curr = list->curr->next;
     }
+    printf("\n");
 }
 
 void DeleteHead(List* list) {
@@ -197,7 +200,7 @@ void Delete(List* list) {
             list->curr->pre->next = list->curr->next;
         }
     }
-}
+}//오류있음
 
 void Switch(List* list) {
     list->curr = list->head;
